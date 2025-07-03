@@ -1,0 +1,157 @@
+/* ===== 全体の中央配置と背景スタイル ===== */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fffdf8;
+    font-family: 'Yu Gothic', sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #4a2e00;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* ===== フォーム内スタイル ===== */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.login-form label {
+    font-weight: bold;
+    color: #5c3b00;
+    font-size: 14px;
+}
+
+.login-form input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fffaf2;
+    transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #ffa500;
+    background-color: #fff4e5;
+}
+
+/* ===== ログインボタン ===== */
+.login-button {
+    background-color: #ffa500;
+    color: white;
+    padding: 14px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #e69500;
+}
+
+.button-area {
+    text-align: right;
+}
+
+/* ===== 戻るリンクスタイル ===== */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffa500;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #e69500;
+}
+
+/* ===== 補足説明テキスト ===== */
+.note {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #5a4634; /* 優しい茶系の文字色 */
+    text-align: center;
+    line-height: 1.8;
+}
+
+.note a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.note a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register-form label {
+    font-weight: bold;
+    color: #4a2e00;
+}
+
+.register-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #fff8f0;
+}
+
+
+/* ボタンを右寄せするコンテナ */
+.button-area {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 登録ボタンの見た目 */
+.register-button {
+    background-color: #ffa500;       /* オレンジ色のベース */
+    color: white;                    /* 文字色 */
+    padding: 12px 24px;              /* パディングでサイズ調整 */
+    border: none;
+    border-radius: 8px;              /* 丸み */
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* ホバー時の色変化 */
+.register-button:hover {
+    background-color: #e69500;
+}

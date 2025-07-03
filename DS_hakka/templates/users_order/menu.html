@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>メニュー - モバおる</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users_order.css') }}">
+    
+    <!-- ★★★ このページ専用のスタイルを追加 ★★★ -->
+    <style>
+        .add-to-cart-btn {
+            transition: all 0.3s ease;
+        }
+        .add-to-cart-btn.loading {
+            background-color: #777;
+            cursor: wait;
+        }
+        .add-to-cart-btn.success {
+            background-color: #28a745; /* 緑色 */
+            color: white;
+            transform: scale(1.05); /* 少し大きくする */
+        }
+        .add-to-cart-btn:disabled {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="store-name">モバおる - {{ store['store_name'] }}</div>
+    <div class="user-info">
+        <span class="username">
+            ログイン中: {{ u_name if u_name else 'ゲスト' }}
+        </span>
+        <a href="{{ url_for('users_home.logout') }}" class="btn btn-danger btn-sm">ログアウト</a>
+    </div>
+</header>
+
+<div class="sub-header">
+    <p>メニュー画面</p>
+</div>
+
+    
+<div class="filter-bar">
+    <div class="category-buttons">
+        <button class="category-btn" data-category="all">すべて</button>
+        {% for cat in categories %}
+            <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+        {% endfor %}
+    </div>
+    <input type="search" id="menu-search" placeholder="メニュー名で検索..." />
+</div>
+
+
+<div class="under-hedder">
+    <a href="{{ url_for('users_order.back_to_home_and_clear_cart') }}">戻る</a>
+    <a href="{{ url_for('users_order.cart_confirmation') }}">カート確認 (<span id="cart-count">{{ cart.values()|sum(attribute='quantity') }}</span>)</a>
+</div>
+
+<main class="container">
+    <div class="menu-grid">
+        {% for item in menu_items %}
+        <div class="menu-card" data-menu-id="{{ item['menu_id'] }}">
+            
+            <div class="item-info">
+                <div class="item-name">{{ item['menu_name'] }}</div>
+                <div class="item-category">{{ item['category'] }}</div>
+            </div>
+            
+            <div class="item-selection">
+                <div class="item-price">{{ item['price'] }}円</div>
+                <div class="quantity-selector">
+                    <button class="qty-down-btn">▽</button>
+                    <input type="text" class="qty-input" value="1" readonly>
+                    <button class="qty-up-btn">△</button>
+                </div>
+                <button class="add-to-cart-btn">カートに追加</button>
+            </div>
+    
+        </div>
+        {% endfor %}
+    </div>
+    
+</main>
+    <div id="flash-message-container"></div>
+
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+
+</body>
+</html>

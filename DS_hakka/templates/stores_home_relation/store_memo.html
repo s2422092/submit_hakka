@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア管理 - ストアメモ</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+    
+</head>
+<body>
+        <header class="site-header">
+            <h1>{{ store_name }} - ストアメモ</h1>
+            <div class="header-links">
+                <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+                <a href="{{ url_for('stores_detail.store_info') }}">ストア情報</a>
+                <a href="{{ url_for('general.explamation') }}">ログアウト</a>
+            </div>
+        </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}" class="active">ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }}">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}">paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}">手順ページ</a></li>
+        </ul>
+    </nav>
+    <div class="sub-navigation">
+        <a href="{{ url_for('stores_detail.store_home') }}" class="shortcut-link">ストアホーム</a>
+        <a href="{{ url_for('stores_home_relation.store_home_menu') }}" class="shortcut-link">商品ページ</a>
+        <a href="{{ url_for('stores_home_relation.store_analysis') }}" class="shortcut-link">売り上げ予測分析</a>
+        <a href="{{ url_for('stores_home_relation.store_customer_history') }}" class="shortcut-link">顧客履歴</a>
+        <a href="{{ url_for('stores_home_relation.store_memo') }}" class="shortcut-link">ストアメモ</a>
+        <a href="{{ url_for('stores_home_relation.store_reservation') }}" class="shortcut-link">予約受付</a>
+        <a href="{{ url_for('stores_home_relation.store_other') }}" class="shortcut-link">そのほか</a>
+    </div>
+    
+
+    
+
+  
+
+</body>
+</html>

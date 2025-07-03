@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/users_login.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>ログイン</h1>
+
+    <!-- ✅ ここに action を追加 -->
+    <form action="{{ url_for('users_login.login') }}" method="post" class="login-form">
+        <label for="username">ユーザー名</label>
+        <input type="text" name="u_name" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" name="password" required>
+
+        <div class="button-area">
+            <button type="submit" class="login-button">ログイン</button>
+        </div>
+    </form>
+
+    
+    <div class="button-area">
+        <a href="{{ url_for('general.explamation') }}" class="back-link">← 戻る</a>
+    </div>
+
+    <p class="note">
+        すでにアカウントをお持ちでない方は
+        <a href="{{ url_for('users_login.signup') }}">こちら</a> から新規登録
+    </p>
+
+    <p class="note">
+        パスワードを忘れた方は
+        <a href="{{ url_for('users_login.re_enrollment') }}">こちら</a> から再登録
+    </p>
+</div>
+
+</body>
+</html>

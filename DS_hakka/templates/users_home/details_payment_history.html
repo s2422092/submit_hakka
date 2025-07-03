@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>決済履歴の詳細ページ</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
+
+
+</head>
+
+<body>
+    <div class="water-blue-section">
+        <span class="username">
+            ログイン中: {{ u_name if u_name else 'ゲスト' }}
+        </span>
+        <div class="user-links">
+            <a href="{{ url_for('users_home.users_data')}}">ユーザー情報</a>
+            <a href="{{url_for('users_home.logout')}}">ログアウト</a>
+        </div>
+    </div>
+
+    <div class="gray-section left-align-nav">
+        <ul>
+            <li class="{% if request.endpoint == 'users_home.payment_history' %}active{% endif %}">
+                <a href="{{ url_for('users_home.payment_history') }}">決済履歴に戻る</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="details-container">
+        <h1 class="details-title">注文詳細 - 注文番号: {{ payment_details[0]['order_id'] }}</h1>
+        <p class="details-subtitle">注文日時: {{ payment_details[0]['datetime'] }}</p>
+    
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>数量</th>
+                    <th>単価</th>
+                    <th>合計</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in payment_details %}
+                    <tr>
+                        <td>{{ item['menu_name'] }}</td>
+                        <td>{{ item['quantity'] }}</td>
+                        <td>{{ item['price_at_order'] }}円</td>
+                        <td>{{ item['price_at_order'] * item['quantity'] }}円</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+
+</body>
+
+</html>
+

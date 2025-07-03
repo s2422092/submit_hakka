@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア管理 - 登録内容の確認</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+    <style>
+        .confirmation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .confirmation-table th, .confirmation-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .confirmation-table th {
+            background-color: #f2f2f2;
+        }
+        .action-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .back-button, .finalize-button {
+            padding: 12px 25px;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <h1>{{ store_name }} - 登録内容の確認</h1>
+    </header>
+    <main class="main-container">
+        <h2>以下の内容でメニューを登録しますか？</h2>
+        
+        <div class="confirmation-box">
+            {% if menus_to_check %}
+                <table class="confirmation-table">
+                    <thead>
+                        <tr>
+                            <th>商品名</th>
+                            <th>カテゴリ/商品説明</th>
+                            <th>値段 (円)</th>
+                            <th>在庫</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for menu in menus_to_check %}
+                        <tr>
+                            <td>{{ menu.menu_name }}</td>
+                            <td>{{ menu.category }}</td>
+                            <td>{{ menu.price }}</td>
+                            <td>{{ '売り切れ' if menu.soldout == 1 else '在庫あり' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>確認するデータがありません。</p>
+            {% endif %}
+        </div>
+        <form action="{{ url_for('stores_detail.menu_finalize') }}" method="POST">
+            <!-- テンプレートエンジン(Jinja2)のtojsonフィルタでPythonのリストをJSON文字列に変換 -->
+            <input type="hidden" name="menus_data" value='{{ menus_to_check | tojson | safe }}'>
+            
+            <div class="action-area">
+                <a href="javascript:history.back()" class="back-button">戻って修正する</a>
+                <button type="submit" class="finalize-button">この内容で確定する</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

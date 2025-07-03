@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア管理 - 手順ページ</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+</head>
+<body>
+    <!-- ユーザー情報セッション -->
+        <header class="site-header">
+            <h1>{{ store_name }} - 手順ページ</h1>
+            <div class="header-links">
+                <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+                <a href="{{ url_for('stores_detail.store_info') }}">ストア情報</a>
+                <a href="{{ url_for('general.explamation') }}">ログアウト</a>
+            </div>
+        </header>
+    <!-- ユーザー情報セッション -->
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}" >ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }}">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}">paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}" class="active">手順ページ</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-box">
+            <div class="instructions-content">
+                <h3>モバイルオーダーサイトの概要</h3>
+                    <p>
+                        このモバイルオーダーシステムは、スマートフォンやPCからユーザーが事前に注文・決済できる仕組みを提供するものです。注文の受付、提供状況の管理、決済までを一元化することで、店舗運営を効率化し、顧客満足度を高めることができます。
+                    </p>
+
+                    <h4>主な機能</h4>
+                    <ul>
+                        <li><strong>注文受付（オンライン）</strong>：お客様が来店前にWebから商品を選び、注文を確定します。</li>
+                        <li><strong>オンライン決済</strong>：PayPay等を通じた事前決済が可能です。</li>
+                        <li><strong>注文リストの管理</strong>：店舗側はリアルタイムで注文状況を確認し、「準備中」「提供済み」などのステータスを更新できます。</li>
+                    </ul>
+
+                    <h4>ご利用の流れ</h4>
+                    <ol>
+                        <li>店舗管理者は「商品登録」ページで商品を追加・編集します。</li>
+                        <li>お客様はモバイルサイトから店舗を選び、商品をカートに入れて注文を確定します。</li>
+                        <li>決済方法がPayPayである場合、即時支払いが行われ、注文は注文リストに追加されます。</li>
+                        <li>店舗は「注文リスト」ページでリアルタイムに注文内容を確認し、ステータスを更新します。</li>
+                        <li>商品提供後、注文が完了となります。</li>
+                    </ol>
+
+                    <h4>管理者が行うべき初期設定</h4>
+                    <ul>
+                        <li>「商品登録」ページで販売メニューを登録</li>
+                        <li>「PayPayの紐付け」ページで加盟店API情報を入力（事前にPayPay開発者申請が必要）</li>
+                        <li>店舗情報の確認と編集（ログイン時のセッション情報に基づく）</li>
+                    </ul>
+
+                    <h4>セキュリティと管理上の注意点</h4>
+                    <ul>
+                        <li>ログインしたまま放置せず、業務終了後は必ず「ログアウト」してください。</li>
+                        <li>PayPayのAPIキーやシークレット情報は他人に絶対に教えないでください。</li>
+                        <li>商品価格・在庫状況は常に最新情報に保ちましょう。</li>
+                    </ul>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア管理 - 商品登録</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+    <style>
+        /* このページ専用のスタイル */
+        .main-content {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .registration-container {
+            flex: 1;
+            min-width: 350px;
+        }
+        .menu-list-container {
+            flex: 2;
+            min-width: 400px;
+        }
+        .menu-list-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .menu-list-table th, .menu-list-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .menu-list-table th {
+            background-color: #f2f2f2;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #da190b;
+        }
+        .flash-messages {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        .flash-messages li {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .flash-messages .success { background-color: #d4edda; color: #155724; }
+        .flash-messages .error { background-color: #f8d7da; color: #721c24; }
+        .flash-messages .warning { background-color: #fff3cd; color: #856404; }
+        .flash-messages .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <h1>{{ store_name }} - 商品登録</h1>
+        <div class="header-links">
+            <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+            <a href="#">ストア情報</a> <!-- TODO: url_for('stores_detail.store_info') -->
+            <a href="{{url_for('users_home.logout')}}">ログアウト</a>
+        </div>
+    </header>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}">ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }} "class="active">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}" >paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}">手順ページ</a></li>
+        </ul>
+    </nav>
+    <main class="main-container">
+        <!-- フラッシュメッセージの表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="main-content">
+            <!-- 左側: 登録フォーム -->
+            <div class="registration-container">
+                <h2>新規メニュー登録</h2>
+                <form action="{{ url_for('stores_detail.menu_preview') }}" method="POST" enctype="multipart/form-data">
+                    <div class="template-download-area">
+                        <a href="{{ url_for('stores_detail.download_template') }}" class="download-button">データ入力テンプレート(Excel)をダウンロード</a>
+                    </div>
+                    <div class="registration-area">
+                        <div class="content-box upload-zone">
+                            <label for="file-upload" class="file-drop-area">
+                                <span class="file-icon">📤</span>
+                                <span id="file-msg">ここにCSVファイルをドラッグ＆ドロップ<br>またはクリックして選択</span>
+                            </label>
+                            <input type="file" id="file-upload" name="product_csv" class="file-input-hidden" accept=".csv, .xlsx, .xls">
+                        </div>
+                        <p style="text-align: center; margin: 1rem 0;">または</p>
+                        <div class="content-box manual-input-zone">
+                            <div class="form-fields">
+                                <div class="form-group">
+                                    <label for="product-name">商品名</label>
+                                    <input type="text" id="product-name" name="product_name" placeholder="例：日替わりランチ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-price">値段（円）</label>
+                                    <input type="number" id="product-price" name="product_price" placeholder="例: 500">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-description">カテゴリ/商品説明</label>
+                                    <textarea id="product-description" name="product_description" rows="3" placeholder="商品の特徴などを入力"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="confirmation-area">
+                        <button type="submit" class="confirm-button">確認へ</button>
+                    </div>
+                </form>
+            </div>
+            <!-- 右側: 登録済みメニュー一覧 -->
+            <div class="menu-list-container">
+                <h2>登録済みメニュー一覧</h2>
+                {% if menus %}
+                    <table class="menu-list-table">
+                        <thead>
+                            <tr>
+                                <th>商品名</th>
+                                <th>カテゴリ</th>
+                                <th>値段</th>
+                                <th>在庫</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for menu in menus %}
+                            <tr>
+                                <td>{{ menu.menu_name }}</td>
+                                <td>{{ menu.category }}</td>
+                                <td>{{ menu.price }} 円</td>
+                                <td>{{ '売り切れ' if menu.soldout == 1 else '販売中' }}</td>
+                                <td>
+                                    <form action="{{ url_for('stores_detail.menu_delete', menu_id=menu.menu_id) }}" method="POST" onsubmit="return confirm('本当にこのメニューを削除しますか？');">
+                                        <button type="submit" class="delete-button">削除</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>現在登録されているメニューはありません。</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+    <script>
+        const fileUpload = document.getElementById('file-upload');
+        const fileMsg = document.getElementById('file-msg');
+        fileUpload.addEventListener('change', () => {
+            if (fileUpload.files.length > 0) {
+                fileMsg.textContent = fileUpload.files[0].name;
+            } else {
+                fileMsg.innerHTML = 'ここにファイルをドラッグ＆ドロップ<br>またはクリックして選択';
+            }
+        });
+    </script>
+</body>
+</html>

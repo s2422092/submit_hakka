@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マップ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="water-blue-section">
+        <span class="username">
+            ログイン中: {{ u_name if u_name else 'ゲスト' }}
+        </span>
+        <div class="user-links">
+            <a href="{{ url_for('users_home.users_data')}}">ユーザー情報</a>
+            <a href="{{url_for('users_home.logout')}}">ログアウト</a>
+        </div>
+    </div>
+
+    <div class="gray-section">
+        <ul>
+            <li class="{% if request.endpoint == 'users_home.home' %}active{% endif %}">
+                <a href="{{ url_for('users_home.home') }}">ホーム</a>
+            </li>
+            <li class="{% if request.endpoint == 'users_home.map_shop' %}active{% endif %}">
+                <a href="{{ url_for('users_home.map_shop') }}">マップ</a>
+            </li>
+            <li class="{% if request.endpoint == 'users_home.payment_history' %}active{% endif %}">
+                <a href="{{ url_for('users_home.payment_history') }}">決済履歴</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="map-wrapper">
+        <div id="map"
+             data-locations='{{ stores | tojson }}'
+             data-menu-url-template="{{ url_for('users_order.menu', store_id=0) }}"
+             style="height: 650px;"></div>
+
+        <div class="sidebar">
+            <input type="search" id="store-search" placeholder="店舗名で検索..." />
+            <h2>近くの店舗一覧</h2>
+            <ul class="store-list">
+                {% if stores %}
+                    {% for store in stores %}
+                        <li>
+                            <a href="{{ url_for('users_order.menu', store_id=store.id) }}" class="custom-link">
+                                <h3>{{ store.store_name }}</h3> <p>{{ store.description }}</p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>店舗情報がありません。</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/map_shop.js') }}"></script>
+</body>
+</html>

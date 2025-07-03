@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モバオル - スマホで簡単スマート注文</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="logo">モバオル</div>
+        <nav class="header-nav">
+            <a href="#how-it-works">サービスの流れ</a>
+            <a href="{{url_for('store.store_login')}}" class="login-button store-login">店舗様ログイン</a>
+            <a href="{{url_for('users_login.login')}}" class="login-button user-login">ログイン</a>
+            <a href="{{url_for('users_login.signup')}}" class="signup-button">新規登録</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">いつものお店を、もっと手軽に。</h1>
+                <p class="hero-subtitle">街の小さなお店から学内のカフェまで。<br>スマホひとつで注文をもっとスマートに。</p>
+            </div>
+        </section>
+
+        <section class="selection-container">
+
+                <!-- 店舗オーナー向けカード -->
+            <div class="card store-card">
+                <img src="/static/images/5149647_s.jpg" alt="カフェで働く店員の様子" class="card-image">
+                <h2 class="card-title">店舗のオーナー様</h2>
+                <p class="card-description">
+                    使いやすい管理画面で<br>お店にモバイルオーダーを。<br>
+                    お客様に新しい便利さを提供し利用者UPへ。
+                </p>
+                <div class="card-actions">
+                    <a href="{{url_for('store.store_registration')}}" class="button primary">店舗登録はこちら</a>
+                    <a href="{{url_for('store.store_login')}}" class="button secondary">店舗ログイン</a>
+                </div>
+            </div>
+
+            <!-- 一般利用者向けカード -->
+            <div class="card user-card">
+                <img src="/static/images/27117522_s.jpg" alt="スマホでモバイルオーダーをしている様子" class="card-image">
+                <h2 class="card-title">ご利用のお客様</h2>
+                <p class="card-description">
+                    お気に入りのお店のメニューを並ばずに注文。<br>
+                    あなたの「お気に入り」をもっとスマートに。
+                </p>
+                <div class="card-actions">
+                    <a href="{{url_for('users_login.signup')}}" class="button primary">今すぐはじめる (無料)</a>
+                    <a href="{{url_for('users_login.login')}}" class="button secondary">ログインはこちら</a>
+                </div>
+            </div>
+
+            <!-- 店舗オーナー向けカード -->
+
+        </section>
+
+        <section id="how-it-works" class="how-it-works-section">
+            <h2 class="section-title">簡単3ステップで、すぐにご利用できます</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="step-title">1. スマホで注文</h3>
+                    <p class="step-description">移動中や休憩中に好きなメニューを選んで、PayPayでスムーズに事前決済。</p>
+                </div>
+                <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-utensils"></i></div>
+                    <h3 class="step-title">2. お店が調理開始</h3>
+                    <p class="step-description">注文はリアルタイムでお店に届きます。レジ対応なしですぐに調理を開始。</p>
+                </div>
+                <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3 class="step-title">3. すぐに受け取り</h3>
+                    <p class="step-description">できたての商品を受け取るだけ。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer-bottom">
+        <p>&copy; 2025 モバオル. All Rights Reserved.</p>
+    </footer>
+
+    <!-- ★★★ スムーズスクロール用のJavaScriptを追加 ★★★ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ページ内リンクを持つ全てのaタグを取得
+            const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+            
+            for (let link of smoothScrollLinks) {
+                link.addEventListener('click', (e) => {
+                    // デフォルトのジャンプ動作をキャンセル
+                    e.preventDefault();
+                    
+                    // リンクのhref属性からターゲット要素のIDを取得
+                    let href = link.getAttribute('href');
+                    let targetElement = document.getElementById(href.replace('#', ''));
+                    
+                    if (targetElement) {
+                        // ターゲット要素へスムーズにスクロール
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

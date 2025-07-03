@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア管理 - 注文リスト</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+        <h1>{{ store_name }} - 注文リスト</h1>
+        <div class="header-links">
+            <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+            <a href="{{ url_for('stores_detail.store_info') }}">ストア情報</a>
+            <a href="{{ url_for('general.explamation') }}">ログアウト</a>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}" >ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }}">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}" class="active">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}">paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}">手順ページ</a></li>
+        </ul>
+    </nav>
+
+    <!-- サブナビゲーション:検索バー -->
+    <div class="sub-navigation">
+        <input type="search" id="order-search" placeholder="商品名またはIDで検索...">
+    </div>
+
+    <main class="main-content">
+        <div class="order-list-container">
+            <!-- ヘッダー行 -->
+            <div class="order-header">
+                <div>注文ID</div>
+                <div>注文商品 (数量)</div>
+                <div>注文者名</div>
+                <div>合計金額</div>
+                <div>注文状況</div>
+                <div>注文時間</div>
+            </div>
+
+            <!-- 注文データ行 -->
+            {% for order in orders %}
+            <div class="order-item">
+                <div>{{ order.id }}</div>
+                <div>
+                    <ul>
+                    {% for item in order.items_list %}
+                        <li>{{ item.name }} ({{ item.quantity }}個)</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div>{{ order.user_name }}</div>
+                <div>{{ order.total_amount }}円</div>
+            
+                <!-- 注文状況選択フォーム -->
+                <div>
+                    <form action="{{ url_for('stores_detail.update_order_status', order_id=order.id) }}" method="post">
+                        <select name="status">
+                            {% for s in ['注文受付中', '受付完了', '商品作成中', '作成直前', '受け取り待ち'] %}
+                                <option value="{{ s }}" {% if order.status == s %}selected{% endif %}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit">更新</button>
+                    </form>
+                </div>
+            
+                <div>{{ order.datetime }}</div>
+            </div>
+            {% else %}
+            <div class="order-item no-orders">
+                <p>現在、新しい注文はありません。</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('order-search').addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim(); // 検索入力を取得し、小文字化
+            const orders = document.querySelectorAll('.order-item'); // 全注文リストを取得
+            
+            orders.forEach(order => {
+                // 検索対象: 注文IDと注文商品の名前を取得
+                const orderId = order.querySelector(':nth-child(1)').textContent.toLowerCase(); // 注文ID
+                const items = order.querySelectorAll('ul li'); // 商品リスト
+                const itemNames = Array.from(items).map(item => item.textContent.toLowerCase());
+
+                // 条件判定: 入力がIDまたは商品の名前に含まれるかチェック
+                if (orderId.includes(query) || itemNames.some(name => name.includes(query))) {
+                    order.style.display = ''; // 表示
+                } else {
+                    order.style.display = 'none'; // 非表示
+                }
+            });
+        });
+    </script>
+</body>
+</html>
