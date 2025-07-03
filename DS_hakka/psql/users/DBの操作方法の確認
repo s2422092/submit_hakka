@@ -1,0 +1,33 @@
+sqlite3 app.db
+vscode内において今開発を行なっていいるDS_HAKKAにcdコマンドを利用して移動する
+
+~/hakkason/DS_hakka% cd paypay
+~/hakkason/DS_hakka/paypay% ls
+app.db          app.py          psql            routes          static          templates
+~/hakkason/DS_hakka/paypay% 
+
+
+app.db          app.py          psql            routes          static          templatesこのように表示されるまで移動する
+
+次に、以下のコマンドを実行してデータベースの内容を確認します。
+
+sqlite3 app.db
+と入力してEnterキーを押します。
+
+~/hakkason/DS_hakka/paypay% sqlite3 app.db
+SQLite version 3.43.2 2023-10-10 13:08:14
+Enter ".help" for usage hints.
+sqlite> 
+これでSQLiteのプロンプトが表示されます。
+
+
+ここではpsqlなどを入力してapp.dbにデータを入れることができる。
+
+＜！必須コマンド！＞
+sqlite> .tables
+--ここでは今DB内にどのようなテーブルがあるかを確認することができる。
+sqlite> .exit
+--ここではSQLiteのプロンプトを終了することができる。
+sqlite> select * from users;
+--ここではusersテーブルの全てのデータを確認することができる。
+このようにしてDBを行なっていくことができます。

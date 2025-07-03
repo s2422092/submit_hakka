@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>paypayの紐付け方</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+</head>
+<body>
+    <!-- ユーザー情報セッション -->
+        <header class="site-header">
+            <h1>{{ store_name }} - PayPayの紐付け</h1>
+            <div class="header-links">
+                <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+                <a href="{{ url_for('stores_detail.store_info') }}">ストア情報</a>
+                <a href="{{ url_for('general.explamation') }}">ログアウト</a>
+            </div>
+        </header>
+    <!-- ユーザー情報セッション -->
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}">ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }}">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}" class="active">paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}">手順ページ</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-box">
+            <div class="instructions-content">
+                <h2>この管理画面の使い方</h2>
+
+                <h3>PayPayの紐付け</h3>
+                <p>
+                    売上を受け取るための <strong>PayPay加盟店アカウント</strong> との連携設定を行います。PayPayによるオンライン決済を利用するには、PayPay for Developersの登録と、API連携の設定が必要です。
+                </p>
+                
+                <h4>導入ステップ</h4>
+                <ol>
+                    <li>PayPayの開発者ポータル（<a href="https://developer.paypay.ne.jp" target="_blank">https://developer.paypay.ne.jp</a>）で加盟店申請を行い、審査に通過する必要があります。</li>
+                    <li>審査後、<strong>Merchant ID（加盟店ID）</strong>、<strong>APIキー（API Key & API Secret）</strong>が発行されます。</li>
+                    <li>管理画面の「PayPayの紐付け」ページにて、これらの情報を入力・保存してください。</li>
+                    <li>本番環境利用前に、<strong>Sandbox（テスト環境）</strong>で決済の動作確認を行うことを推奨します。</li>
+                </ol>
+                
+                <h4>対応している機能</h4>
+                <ul>
+                    <li>事前決済（お客様が注文時にPayPayで支払い）</li>
+                    <li>売上の確定・キャンセル処理</li>
+                    <li>Webhookによる支払いステータスの通知受信</li>
+                </ul>
+                
+                <h4>注意事項</h4>
+                <ul>
+                    <li>APIの利用にはHTTPS通信が必須です。ローカル開発時はngrok等のトンネリングを利用することが推奨されます。</li>
+                    <li>APIキーは第三者に絶対に漏洩しないよう注意してください。</li>
+                    <li>売上処理にはPayPay側の仕様に従った「capture」や「refund」処理が必要です。</li>
+                </ul>
+                
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+/* 全体のリセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 水色の背景部分（ユーザー情報セクション） */
+.water-blue-section {
+    background-color: #ed7112; /* 水色 */
+    height: 85px; /* 高さ85ピクセル指定 */
+    padding: 20px; /* セクション内部の余白 */
+    font-family: Arial, sans-serif;
+    color: #ffffff; /* テキストの色を濃いグレーに */
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 縦方向に配置 */
+    align-items: flex-end; /* 内容を右端に揃える */
+    justify-content: center; /* 垂直方向で中央揃え */
+}
+
+.water-blue-section .username {
+    margin-bottom: 5px; /* ユーザー名とリンクの間隔を追加 */
+}
+
+.water-blue-section .user-links {
+    display: flex; /* 横並びに配置 */
+    gap: 15px; /* リンク間の間隔を調整 */
+}
+
+/* ユーザー名のスタイル */
+.username {
+    font-size: 1.5em; /* ユーザー名を大きめに */
+    font-weight: bold; /* 太字化 */
+    margin-right: 10px; /* リンクとの間隔を追加 */
+}
+
+/* ユーザー情報とログアウトのリンクスタイル */
+.user-links a {
+    margin-left: 15px; /* リンク間の間隔を追加 */
+    color: #ffffff; /* グレーの文字 */
+    font-weight: bold; /* 太字化 */
+    text-decoration: none; /* 下線を消去 */
+}
+
+.user-links a:hover {
+    text-decoration: underline; /* ホバー時に下線を表示 */
+}
+
+/* 灰色の背景部分（ナビゲーションセクション） */
+.gray-section {
+    background-color: #D3D3D3; /* 灰色 */
+    height: 50px; /* 高さを40ピクセルに指定 */
+    padding: 10px; /* セクション内部の余白 */
+    font-family: Arial, sans-serif;
+    display: flex; /* フレックスボックスを使用 */
+    align-items: center; /* 垂直方向の中央揃え */
+    justify-content: center; /* 内容を中央に配置 */
+    font-size: 1.4em; /* 文字の大きさを少し大きく */
+    letter-spacing: 0.1em; /* 単語間の感覚を広げる */
+}
+
+/* リンクのスタイル */
+.gray-section ul {
+    list-style-type: none; /* リストアイコンを無効化 */
+    padding: 0;
+    margin: 0;
+    display: flex; /* 横並びに配置 */
+    gap: 15px; /* リンク間の間隔を調整 */
+    font-weight: bold; /* 太字化 */
+}
+
+.gray-section li {
+    margin: 0; /* 余白リセット */
+}
+
+.gray-section a {
+    text-decoration: none; /* 下線を消去 */
+    color: #333; /* テキストをグレー色に */
+}
+
+.gray-section a:hover {
+    text-decoration: underline; /* ホバー時に下線表示 */
+}
+/* 店舗リスト */
+main {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+main h2 {
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+p {
+    font-size: 1em;
+    color: #555;
+}
+
+.gray-section ul li.active {
+    background-color: #ffa500; /* 目立つ色（例：オレンジ） */
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.gray-section ul li.active a {
+    color: white; /* テキストも目立つように */
+    text-decoration: underline;
+}
+
+
+.map-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;  /* 左寄せで横並び */
+    margin: 20px;
+    gap: 20px; /* 地図とサイドバー間に余白 */
+}
+
+#map {
+    height: 650px;
+    width: 70%; /* 横幅70% */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.sidebar {
+    width: 28%;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+/* 検索ボックス */
+.sidebar input[type="search"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;  /* ✅ 下に余白を追加 */
+}
+
+/* h2と検索ボックスを横並びにする */
+.title-search-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+/* 検索ボックスのサイズ調整 */
+.title-search-row input[type="search"] {
+    flex: 0 0 250px; /* 固定幅（必要なら調整可能） */
+    padding: 8px 12px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+
+
+
+/* 店舗リストのリンク部分 */
+main ul li a {
+    display: inline-block;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ed7112; /* オレンジ系の文字色 */
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+main ul li a:hover {
+    text-decoration: underline;
+}
+
+/* 店舗説明文のスタイル */
+main ul li p {
+    font-size: 1em;
+    color: #555;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* 店舗リストのliに少し余白を追加 */
+main ul li {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+
+.custom-link {
+    display: block;
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-link:hover {
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-decoration: none;
+}
+
+.custom-link h3 {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+    color: #ed7112;
+}
+
+.custom-link p {
+    font-size: 1em;
+    color: #555;
+}
+
+
+/* 決済履歴のリスト全体 */
+.history-list-container {
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* 各履歴行の共通スタイル */
+.history-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr 2fr 2fr; /* 各列の比率 */
+    padding: 12px 15px;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95em;
+}
+
+/* ヘッダー行（太字＋背景色） */
+.history-header {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* 偶数・奇数行の背景色 */
+.row-odd {
+    background-color: #ffffff;
+}
+
+.row-even {
+    background-color: #fafafa;
+}
+
+/* 注文履歴がないときの表示 */
+.no-history {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    background-color: #fefefe;
+    font-size: 1em;
+}
+
+
+.order-block {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 15px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.order-item-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 8px 0;
+    border-top: 1px solid #eee;
+    font-size: 0.95em;
+}
+
+.order-item-row:first-child {
+    border-top: none;
+}
+
+.order-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s;
+}
+
+.order-link:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ナビゲーションを左寄せにするクラス（決済履歴詳細用） */
+.gray-section.left-align-nav {
+    justify-content: flex-start; /* 左揃え */
+    padding-left: 20px; /* 左余白を適度に設定 */
+}
+
+/* 決済履歴詳細ページ：全体のコンテナ */
+.details-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-family: Arial, sans-serif;
+}
+
+/* タイトルとサブタイトル */
+.details-title {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.details-subtitle {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* テーブル全体 */
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+/* テーブルヘッダー */
+.details-table thead {
+    background-color: #ed7112;
+    color: #fff;
+}
+
+.details-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* テーブルボディ */
+.details-table td {
+    padding: 12px 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.95em;
+    color: #333;
+}
+
+/* 偶数行の背景色 */
+.details-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 戻るリンクを左に寄せるためのセクション */
+.gray-section.left-align-nav {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+/* --- 注文詳細ページ用 --- */
+
+/* 注文詳細コンテナをチケット風に調整 */
+.details-container {
+    background-color: #fff;
+    border: 2px dashed #007bff;  /* 青色の破線 */
+    border-radius: 16px;
+    padding: 30px;
+    margin: 40px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* タイトルとサブタイトルを中央寄せ & 色分け */
+.details-title {
+    font-size: 1.8em;
+    color: #007bff;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.details-subtitle {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* テーブルの装飾 */
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* テーブルヘッダーのデザイン */
+.details-table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.details-table th {
+    padding: 12px 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* テーブルボディのデザイン */
+.details-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    font-size: 1em;
+    color: #333;
+}
+
+/* 偶数行を薄い背景に */
+.details-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+
+
+
+.gray-section.left-align-nav a:hover {
+    text-decoration: underline;
+}
+
+/* ユーザー名も調整（青系統にしたい場合） */
+.username {
+    color: #ffffff;
+    font-size: 1.2em;
+}
+
+
+
+.gray-section ul li.active a {
+    color: white;
+    text-decoration: underline;
+}

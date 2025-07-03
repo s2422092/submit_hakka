@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>登録完了</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores.css') }}">
+</head>
+<body>
+    <h1>店舗登録が完了しました！</h1>
+    <p>ありがとうございます。</p>
+    <a href="{{ url_for('store.store_registration') }}">新しい店舗を登録する</a><br>
+    <a href="{{ url_for('general.explamation') }}">トップページへ戻る</a>
+</body>
+</html>

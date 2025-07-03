@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>店舗登録フォーム</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores.css') }}">
+</head>
+<body>
+    <h1>店舗登録フォーム</h1>
+    <form action="{{ url_for('store.store_registration') }}" method="post">
+        <label for="store_name">店舗名:</label><br>
+        <input type="text" id="store_name" name="store_name" required><br><br>
+
+        <label for="email">メールアドレス:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">パスワード:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="location">所在地:</label><br>
+        <input type="text" id="location" name="location"><br><br>
+
+        <label for="representative">代表者名:</label><br>
+        <input type="text" id="representative" name="representative"><br><br>
+        
+        <label>営業時間:</label><br>
+        月〜金: 
+        <input type="time" name="weekday_open" required> 〜 
+        <input type="time" name="weekday_close" required><br>
+
+        土日祝: 
+        <input type="time" name="weekend_open" id="weekend_open" required> 〜 
+        <input type="time" name="weekend_close" id="weekend_close" required>
+        <label>
+        <input type="checkbox" id="weekend_closed" name="weekend_closed" value="1" onchange="toggleWeekendInputs()"> 休業
+        </label>
+        <br><br>
+
+        <script>
+        function toggleWeekendInputs() {
+        const closed = document.getElementById('weekend_closed').checked;
+        document.getElementById('weekend_open').disabled = closed;
+        document.getElementById('weekend_close').disabled = closed;
+        if (closed) {
+            document.getElementById('weekend_open').value = "00:00";
+            document.getElementById('weekend_close').value = "00:00";
+        }
+        }
+        </script>
+
+
+        <button type="submit">確認</button>
+    </form>
+
+    <div class="button-area">
+        <a href="{{ url_for('general.explamation') }}" class="back-link">← 戻る</a>
+    </div>
+    
+</body>
+</html>
+

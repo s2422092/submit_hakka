@@ -1,0 +1,293 @@
+/*
+ * users_order.css
+ * モバイルオーダー（ユーザー注文関連ページ）の共通スタイル
+ */
+
+/* --- 全体設定 --- */
+body {
+    font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- ヘッダー --- */
+.main-header {
+    background-color: #f39c12; /* オレンジ */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.main-header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.main-header .user-info .btn {
+    font-size: 0.8em;
+    padding: 5px 10px;
+}
+
+.sub-header {
+    background-color: #e9ecef; /* ライトグレー */
+    padding: 10px 20px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.1em;
+}
+
+.sub-header a {
+    text-decoration: none;
+    color: #495057;
+    font-weight: 500;
+}
+
+/* --- ボタン類 --- */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-paypay {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.btn-paypay:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* --- menu.html --- */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.category-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.category-btn.active {
+    background-color: #007bff;
+}
+
+.search-box {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.menu-card {
+    background-color: #f1f3f5;
+    border: 1px solid #dee2e6;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-card .item-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.menu-card .item-category {
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.menu-card .item-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.item-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-selector input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.item-status {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #adb5bd;
+    cursor: pointer;
+}
+
+.item-status.selected {
+    background-color: #28a745; /* 緑 */
+    border-color: #28a745;
+}
+
+
+/* --- cart_confirmation.html --- */
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    background-color: #f1f3f5;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-item-details {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.cart-total {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* --- payment_selection.html & pay_payment.html --- */
+.payment-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.order-summary {
+    flex-grow: 1;
+}
+
+.store-info {
+    margin-bottom: 20px;
+}
+
+.store-info .name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.payment-actions {
+    min-width: 150px;
+}
+
+.link-display {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.5em;
+}
+
+/* --- reservation_number.html --- */
+.reservation-box {
+    background-color: #e9ecef;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+}
+
+.reservation-box .number-title {
+    font-size: 1.2em;
+    color: #495057;
+}
+
+.reservation-box .reservation-number {
+    font-size: 4em;
+    font-weight: bold;
+    color: #007bff;
+    margin: 20px 0;
+}
+
+.reservation-box .thank-you-message {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.reservation-box .order-details {
+    text-align: left;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ced4da;
+}

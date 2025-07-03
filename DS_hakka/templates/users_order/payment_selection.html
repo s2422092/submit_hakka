@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - モバおる</title>
+    <style>
+        /* ここに提供されたCSSを直接貼り付けるか、適切なCSSファイルをリンクしてください */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #555;
+        }
+        .cake-grid { /* このページでは使用しない可能性あり */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .cake-item { /* このページでは使用しない可能性あり */
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+        .cake-item:hover { /* このページでは使用しない可能性あり */
+            transform: translateY(-5px);
+        }
+        .cake-item img { /* このページでは使用しない可能性あり */
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .cake-item h3 { /* このページでは使用しない可能性あり */
+            margin: 10px 0 5px;
+            font-size: 1.1em;
+            color: #444;
+        }
+        .cake-item p { /* このページでは使用しない可能性あり */
+            font-size: 1.2em;
+            color: #e67e22;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .cake-item button { /* このページでは使用しない可能性あり */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .cake-item button:hover { /* このページでは使用しない可能性あり */
+            background-color: #45a049;
+        }
+
+        .cart-section, .store-info, .order-summary, .payment-actions { /* payment_selection 用のスタイル */
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .store-info {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+        .order-summary h3 {
+            text-align: left;
+            margin-top: 0;
+            color: #555;
+        }
+        .cart-items-list {
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.95em;
+            color: #666;
+        }
+        .item-name { flex-grow: 1; text-align: left; }
+        .item-quantity { width: 50px; text-align: center; }
+        .item-price { width: 100px; text-align: right; font-weight: bold; color: #333; }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #e67e22;
+        }
+        .payment-actions {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .payment-actions h3 {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        .under-hedder { /* このページでは使用しない可能性あり */
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+        }
+        .under-hedder a { /* このページでは使用しない可能性あり */
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        .under-hedder a:hover { /* このページでは使用しない可能性あり */
+            background-color: #555;
+            border-radius: 4px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            
+            /* ★重要★ モーダルを垂直・水平中央に配置するためのFlexbox設定 */
+            display: flex; 
+            align-items: center; /* 垂直中央寄せ */
+            justify-content: center; /* 水平中央寄せ */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            /* margin: 15% auto; ← Flexbox使用時は不要 */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            text-align: center;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #payment-status-message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .status-completed {
+            color: #27ae60;
+        }
+        .status-failed {
+            color: #e74c3c;
+        }
+        .status-timeout {
+            color: #f39c12;
+        }
+        /* Styles for the deeplink button */
+        #deeplink-button {
+            background-color: #FFCD00; /* PayPay yellow */
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        #deeplink-button:hover {
+            background-color: #E6B800; /* Darker yellow on hover */
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="store-info">
+            <span class="name">{{ store_name }}</span>
+        </div>
+    
+        <div class="order-summary">
+            <h3>注文内容</h3>
+            <div class="cart-items-list">
+                {% for item in cart %}
+                <div class="cart-item">
+                    <span class="item-name">{{ item.name }}</span>
+                    <span class="item-quantity">{{ item.quantity }}個</span>
+                    <span class="item-price">{{ item.price * item.quantity }}円</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="cart-total">
+                合計: <span id="display-total-price">{{ total_price }}</span>円
+            </div>
+            
+        </div>
+    
+        <div class="payment-actions">
+            <h3>お支払い方法</h3>
+            <p>上記の内容でよろしければ、PayPayで支払いを確定してください。</p>
+            <button type="button" class="btn btn-primary" id="start-paypay-button"
+                    data-cart-data='{{ cart | tojson }}'
+                    data-total-amount="{{ total_price }}"
+                    data-paypay-api-base-url="{{ paypay_api_base_url }}" 
+                    data-callback-merchant-id="{{ session.pop('paypay_callback_merchant_id', '') }}">
+                PayPayで支払う
+            </button>
+        </div>
+
+        <br>
+        <a href="{{ url_for('users_order.cart_confirmation') }}" class="btn btn-secondary">カートに戻る</a>
+    </main>
+    
+    <div class="under-hedder">
+        <a href="{{ url_for('users_order.cart_confirmation') }}">戻る</a>
+        <a href="{{ url_for('users_order.reservation_number') }}" style="text-decoration:none; color: inherit;">リンク表示</a>
+    </div>
+    
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>PayPay支払い</h2>
+            <button id="deeplink-button" class="checkout-button" style="display: none; margin-bottom: 20px;">PayPayアプリで開く</button>
+            <div id="qr-code-container">
+            </div>
+            <p id="payment-status-message"></p>
+            <p id="qr-instruction" style="margin-top: 10px; display: none;"></p>
+        </div>
+    </div>
+    
+    <script>
+        const startPaypayButton = document.getElementById('start-paypay-button');
+        // API_BASE_URL は /users_order/paypay の形式
+        const API_BASE_URL = startPaypayButton ? startPaypayButton.dataset.paypayApiBaseUrl : 'http://127.0.0.1:5003/users_order/paypay'; 
+
+        const displayTotalPriceSpan = document.getElementById('display-total-price');
+
+        const qrModal = document.getElementById('qr-modal');
+        const closeModalButton = document.querySelector('.close-button');
+        const qrCodeContainer = document.getElementById('qr-code-container');
+        const paymentStatusMessage = document.getElementById('payment-status-message');
+        const deeplinkButton = document.getElementById('deeplink-button');
+        const qrInstruction = document.getElementById('qr-instruction');
+
+        let cart = []; 
+        let currentMerchantPaymentId = null; 
+        let pollInterval = null; 
+        let lastQrCodeUrl = ''; 
+
+        if (startPaypayButton) { 
+            startPaypayButton.addEventListener('click', async () => {
+                const cartDataJson = startPaypayButton.dataset.cartData;
+                const totalAmount = parseInt(startPaypayButton.dataset.totalAmount);
+                
+                if (!cartDataJson || totalAmount <= 0) {
+                    alert('カート情報が不正です。');
+                    return;
+                }
+
+                let cart = [];
+                try {
+                    cart = JSON.parse(cartDataJson);
+                } catch (e) {
+                    console.error("Failed to parse cart data:", e);
+                    alert("カートデータの読み込みに失敗しました。");
+                    return;
+                }
+                
+                if (cart.length === 0) {
+                    alert('カートに商品がありません。');
+                    return;
+                }
+
+                const orderItems = cart.map(item => ({
+                    name: item.name, 
+                    quantity: item.quantity,
+                    price: item.price 
+                }));
+
+                paymentStatusMessage.textContent = "PayPay支払い情報を準備中...";
+                paymentStatusMessage.className = '';
+                qrCodeContainer.innerHTML = '';
+                deeplinkButton.style.display = 'none'; 
+                qrInstruction.style.display = 'none'; 
+                qrModal.style.display = 'flex'; 
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/create-qr`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            orderItems: orderItems, 
+                            amount: {
+                                amount: totalAmount,
+                                currency: 'JPY'
+                            }
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(`QRコード生成エラー: ${errorData.details || response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    console.log("QR Creation Response:", data);
+
+                    if (data.resultInfo && data.resultInfo.code === 'SUCCESS' && data.data) {
+                        currentMerchantPaymentId = data.data.merchantPaymentId;
+                        lastQrCodeUrl = data.data.url; 
+
+                        let qrCodeHtml = ''; 
+
+                        if (data.data.deeplink) {
+                            deeplinkButton.dataset.deeplink = data.data.deeplink;
+                            deeplinkButton.style.display = 'block';
+
+                            qrCodeHtml = `
+                                <a href="${data.data.deeplink}" target="_blank" rel="noopener noreferrer" style="display: inline-block; cursor: pointer;">
+                                    <img src="${data.data.url}" alt="PayPay QR Code" style="max-width: 200px; height: auto; margin: 20px auto; border: 1px solid #ddd;">
+                                </a>
+                                <p style="word-break: break-all; font-size: 0.9em; margin-top: 10px;">
+                                    または直接リンク: <a href="${data.data.url}" target="_blank" rel="noopener noreferrer">${data.data.url}</a>
+                                </p>
+                            `;
+                            qrInstruction.textContent = "スマホでPayPayアプリから開くか、QRコードをスキャンして支払いを完了してください。";
+                            qrInstruction.style.display = 'block';
+                            paymentStatusMessage.textContent = "PayPayアプリで支払い中...";
+
+                        } else if (data.data.url) { 
+                            qrCodeHtml = `
+                                <img src="${data.data.url}" alt="PayPay QR Code" style="max-width: 200px; height: auto; margin: 20px auto; border: 1px solid #ddd;">
+                                <p style="word-break: break-all; font-size: 0.9em; margin-top: 10px;">
+                                    または直接リンク: <a href="${data.data.url}" target="_blank" rel="noopener noreferrer">${data.data.url}</a>
+                                </p>
+                            `;
+                            qrInstruction.textContent = "QRコードをスキャンして支払いを完了してください。";
+                            qrInstruction.style.display = 'block';
+                            paymentStatusMessage.textContent = "QRコードをスキャンして支払い中...";
+                        } else {
+                             paymentStatusMessage.textContent = "支払い情報の取得に失敗しました。";
+                             console.error("No valid QR or Deeplink URL found:", data);
+                             return; 
+                        }
+
+                        qrCodeContainer.innerHTML = qrCodeHtml; 
+
+                        // ディープリンクのaタグクリックイベントは削除。
+                        // ポーリングでPayPayの決済完了を待つのが正しいフロー。
+                        // ユーザーがPayPayアプリに移動したとしても、決済完了はポーリングで確認する。
+
+                        // 支払いステータスをポーリング
+                        pollPaymentStatus(currentMerchantPaymentId);
+
+                    } else {
+                        paymentStatusMessage.textContent = "QRコードの生成に失敗しました。";
+                        console.error("Failed to get QR code or Deeplink URL:", data);
+                    }
+
+                } catch (error) {
+                    console.error("Checkout error:", error);
+                    paymentStatusMessage.textContent = `エラー: ${error.message}`;
+                }
+            });
+        }
+
+        if (deeplinkButton) { 
+            deeplinkButton.addEventListener('click', () => {
+                const deeplinkUrl = deeplinkButton.dataset.deeplink; 
+                if (deeplinkUrl) {
+                    window.location.href = deeplinkUrl;
+                    paymentStatusMessage.textContent = "PayPayアプリに移動しました。アプリで支払いを完了してください。";
+                    // ★重要★ ディープリンクでアプリに飛んだ後も、バックグラウンドでポーリングを続ける
+                    // ユーザーがアプリで支払いを完了したら、このポーリングが成功を検知し、
+                    // reservation_numberページへリダイレクトします。
+                    if (currentMerchantPaymentId && !pollInterval) { // 念のため、まだポーリングが開始されていなければ開始
+                        pollPaymentStatus(currentMerchantPaymentId);
+                    }
+                }
+            });
+        }
+
+        // 支払いステータスをポーリングする関数
+        async function pollPaymentStatus(merchantPaymentId) {
+            paymentStatusMessage.textContent = "支払いステータスを確認中...";
+            paymentStatusMessage.className = ''; 
+
+            const maxAttempts = 120; // 240秒 / 2秒 = 120回
+            let attempts = 0;
+
+            if (pollInterval) {
+                clearInterval(pollInterval);
+            }
+
+            pollInterval = setInterval(async () => {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    clearInterval(pollInterval);
+                    paymentStatusMessage.textContent = "タイムアウト: 支払いステータスを確認できませんでした。";
+                    paymentStatusMessage.classList.add('status-timeout');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/order-status/${merchantPaymentId}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log("Polling Status Response:", data);
+
+                    if (data.data && data.data.status) {
+                        const status = data.data.status;
+                        if (status === 'COMPLETED') {
+                            clearInterval(pollInterval);
+                            paymentStatusMessage.textContent = "支払い完了！注文を確定しています...";
+                            paymentStatusMessage.classList.add('status-completed');
+                            
+                            // ★★★ ここに新しい処理を追加 ★★★
+                            try {
+                                // API_BASE_URL は /users_order/paypay で終わるので、
+                                // /users_order/ にするために .replace('/paypay', '') を使う
+                                const finalizeResponse = await fetch(`${API_BASE_URL.replace('/paypay', '')}/finalize_paypay_order`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    // finalize_paypay_order はセッションからカート情報を取得するため、bodyは空でOK
+                                    body: JSON.stringify({}) 
+                                });
+
+                                if (!finalizeResponse.ok) {
+                                    const errorData = await finalizeResponse.json();
+                                    throw new Error(`注文確定エラー: ${errorData.error || finalizeResponse.statusText}`);
+                                }
+
+                                const finalizeData = await finalizeResponse.json();
+                                console.log("Order Finalization Response:", finalizeData);
+                                
+                                // 注文確定が成功したら、reservation_number ページへリダイレクト
+                                window.location.href = '{{ url_for("users_order.reservation_number") }}';
+
+                            } catch (finalizeError) {
+                                console.error("注文確定に失敗しました:", finalizeError);
+                                paymentStatusMessage.textContent = `支払い完了後、注文確定中にエラーが発生しました: ${finalizeError.message}`;
+                                paymentStatusMessage.classList.add('status-failed');
+                                qrInstruction.style.display = 'none';
+                                deeplinkButton.style.display = 'none';
+                            }
+                            // ★★★ ここまで新しい処理を追加 ★★★
+
+                        } else if (status === 'FAILED' || status === 'CANCELED') {
+                            clearInterval(pollInterval);
+                            paymentStatusMessage.textContent = "支払い失敗。もう一度お試しください。";
+                            paymentStatusMessage.classList.add('status-failed');
+                            qrInstruction.style.display = 'none';
+                            deeplinkButton.style.display = 'none';
+                        } else {
+                            paymentStatusMessage.textContent = `支払いステータス: ${status}...`;
+                        }
+                    } else if (data.status === 'TIMEOUT') { 
+                        clearInterval(pollInterval);
+                        paymentStatusMessage.textContent = "タイムアウト: 支払いステータスを確認できませんでした。";
+                        paymentStatusMessage.classList.add('status-timeout');
+                        qrInstruction.style.display = 'none';
+                        deeplinkButton.style.display = 'none';
+                    } else if (data.error) {
+                        clearInterval(pollInterval);
+                        paymentStatusMessage.textContent = `エラー: ${data.message || data.error}`;
+                        paymentStatusMessage.classList.add('status-failed');
+                        qrInstruction.style.display = 'none';
+                        deeplinkButton.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error("Polling error:", error);
+                    clearInterval(pollInterval);
+                    paymentStatusMessage.textContent = `ポーリング中にエラーが発生しました: ${error.message}`;
+                    paymentStatusMessage.classList.add('status-failed');
+                    qrInstruction.style.display = 'none';
+                    deeplinkButton.style.display = 'none';
+                }
+            }, 2000); 
+        }
+
+        closeModalButton.addEventListener('click', () => {
+            qrModal.style.display = 'none';
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === qrModal) {
+                qrModal.style.display = 'none';
+                if (pollInterval) {
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

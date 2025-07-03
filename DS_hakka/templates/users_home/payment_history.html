@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>決済履歴</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
+
+
+</head>
+
+<body>
+
+        <div class="water-blue-section">
+        <span class="username">
+            ログイン中: {{ u_name if u_name else 'ゲスト' }}
+        </span>
+        
+        <div class="user-links">
+            <a href="{{url_for('users_home.users_data')}}">ユーザー情報</a>
+            <a href="{{url_for('users_home.logout')}}">ログアウト</a>
+        </div>
+    </div>
+
+    <!-- 灰色の背景部分（ナビゲーションセクション） -->
+    <div class="gray-section">
+        <ul>
+            <li class="{% if request.endpoint == 'users_home.home' %}active{% endif %}">
+                <a href="{{ url_for('users_home.home') }}">ホーム</a>
+            </li>
+            <li class="{% if request.endpoint == 'users_home.map_shop' %}active{% endif %}">
+                <a href="{{ url_for('users_home.map_shop') }}">マップ</a>
+            </li>
+            <li class="{% if request.endpoint == 'users_home.payment_history' %}active{% endif %}">
+                <a href="{{ url_for('users_home.payment_history') }}">決済履歴</a>
+            </li>
+        </ul>
+    </div>
+
+    <main>
+
+        <h1>決済履歴</h1>
+
+        <div class="history-list-container">
+            {% if grouped_history %}
+                {% for order_id, items in grouped_history.items() %}
+                    <a href="{{ url_for('users_home.details_payment_history', order_id=order_id) }}" class="order-link">
+                        <div class="order-block">
+                            <div class="order-header">
+                                <span class="order-id">注文番号: {{ order_id }}</span>
+                                <span class="order-datetime">{{ items[0]['datetime'] }}</span>
+                            </div>
+        
+                            <div class="order-details">
+                                {% for item in items %}
+                                    <div class="order-item-row">
+                                        <span>{{ item['store_name'] }}</span>
+                                        <span>{{ item['menu_name'] }}</span>
+                                        <span>{{ item['quantity'] }}個</span>
+                                        <span class="order-status">状態: {{ items[0]['status'] }}</span>
+                                        <span>{{ item['price_at_order'] * item['quantity'] }}円</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <div class="no-history">
+                    <p>決済履歴はまだありません。</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        
+
+    </main>
+
+</body>
+
+</html>
+

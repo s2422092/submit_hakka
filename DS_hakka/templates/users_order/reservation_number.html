@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約完了 - モバおる</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users_order.css') }}">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="store-name">モバおる - 〇〇食堂</div>
+        <div class="user-info">
+            <span>ユーザー名</span>
+        </div>
+    </header>
+
+    <div class="sub-header">
+        <P>予約番号</P>
+    </div>
+
+    <div class="under-hedder">
+        <a href="{{ url_for('users_home.home') }}">ホームに戻る</a>
+        <a href="{{ url_for('users_order.reservation_number') }}" style="text-decoration:none; color: inherit;">
+            <div class="link-display">
+                リンク表示
+            </div>
+        </a>
+    </div>
+
+    <div class="container">
+        <h1>注文が確定しました！</h1>
+        <div class="ticket-box">
+            <p class="reservation-number-text">あなたの予約番号は: <strong class="order-id">{{ order_id }}</strong> です。</p>
+            
+            {% if merchant_payment_id and merchant_payment_id != 'N/A' %}
+            <p class="paypay-id-text">PayPay取引ID: <strong class="merchant-id">{{ merchant_payment_id }}</strong></p>
+            {% endif %}
+        
+            <p class="info-text">この番号を控えて、商品をお受け取りください。</p>
+            
+            <div class="button-group">
+                <a href="{{ url_for('users_home.home') }}" class="button primary-button">ホームに戻る</a>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

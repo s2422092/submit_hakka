@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストア情報</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores_detail.css') }}">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+        <header class="site-header">
+            <h1>{{ store_name }} - ホーム</h1>
+            <div class="header-links">
+                <div class="store-name">ログイン中: {{ store_name if store_name else 'ゲスト' }}</div>
+                <a href="{{ url_for('stores_detail.store_info') }}">ストア情報</a>
+                <a href="{{ url_for('general.explamation') }}">ログアウト</a>
+            </div>
+        </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{{ url_for('stores_detail.store_home') }}" class="active">ホーム</a></li>
+            <li><a href="{{ url_for('stores_detail.menu_registration') }}">商品登録</a></li>
+            <li><a href="{{ url_for('stores_detail.order_list') }}">注文リスト</a></li>
+            <li><a href="{{ url_for('stores_detail.paypay_linking') }}">paypayの紐付け</a></li>
+            <li><a href="{{ url_for('stores_detail.procedure') }}">手順ページ</a></li>
+        </ul>
+    </nav>
+
+    <!-- ストア情報 -->
+<main>
+    <h4>ストア情報</h4>
+    <ul>
+        <!-- 店舗情報表示 -->
+        {% if store_data %}
+        <p>店舗名: {{ store_data.store_name }}</p>
+        <p>メール: {{ store_data.email }}</p>
+        <p>所在地: {{ store_data.location }}</p>
+        <p>代表者: {{ store_data.representative }}</p>
+        <p>説明: {{ store_data.description }}</p>
+        <p>登録日: {{ store_data.created_at }}</p>
+        {% else %}
+        <p>ストア情報がありません。</p>
+        {% endif %}
+
+    </ul>
+</main>
+</body>
+</html>

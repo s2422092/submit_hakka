@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>店舗ログイン</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores.css') }}">
+</head>
+<body>
+
+    <h1>店舗ログイン</h1>
+
+    <form action="{{ url_for('store.store_login') }}" method="post">
+        <label for="store_name">店舗名</label>
+        <input type="text" name="store_name" id="store_name" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <div class="button-area">
+        <a href="{{ url_for('store.store_registration') }}" class="back-link">新規登録はこちら</a><br>
+        <a href="{{ url_for('general.explamation') }}">トップページへ戻る</a>
+    </div>
+
+</body>
+</html>

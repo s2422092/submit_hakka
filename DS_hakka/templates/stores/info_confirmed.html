@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>店舗情報確認</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stores.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+    <h1>入力内容の確認</h1>
+
+    <table>
+        <tr><th>店舗名</th><td>{{ store.store_name }}</td></tr>
+        <tr><th>メールアドレス</th><td>{{ store.email }}</td></tr>
+        <tr><th>パスワード</th><td>{{ store.password }}</td></tr>
+        <tr><th>所在地</th><td>{{ store.location }}</td></tr>
+        <tr><th>代表者名</th><td>{{ store.representative }}</td></tr>
+        <tr><th>月〜金</th><td>{{ store.weekday_open }} 〜 {{ store.weekday_close }}</td></tr>
+        <tr><th>土日祝</th>
+            <td>
+                {% if store.weekend_closed == '1' %}
+                    休業
+                {% else %}
+                    {{ store.weekend_open }} 〜 {{ store.weekend_close }}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="button-area">
+        <a href="{{url_for('store.store_registration')}}" class="back-link">← 戻る</a>
+    </div>
+
+    <div class="button-area">
+        <form action="{{ url_for('store.registration_complete') }}" method="post">
+            <button type="submit">この内容で登録する</button>
+        </form>        
+    </div>
+</div>
+
+</body>
+</html>
