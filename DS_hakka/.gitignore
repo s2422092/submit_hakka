@@ -1,0 +1,28 @@
+# 機密ファイル
+.env
+*.env
+*.key
+*.pem
+secrets.json
+config.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+
+# 仮想環境
+.venv/
+venv/
+ENV/
+
+
+# VSCode
+.vscode/
+
+# ログやキャッシュ
+*.log
+*.sqlite3
+.cache/
